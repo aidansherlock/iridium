@@ -75,14 +75,8 @@ section{position:relative}
 .top nav a:hover{color:var(--t1)}
 .top nav a[aria-current]{color:var(--t1);border-color:var(--volt)}
 .bar{position:fixed;left:0;top:0;height:2px;width:100%;z-index:21;background:var(--iri);transform-origin:0 50%;transform:scaleX(var(--page))}
+@media(min-width:1280px){.bar{display:none}}
 
-/* the price path on the right edge: drawn by the scroll wheel, the white point is the last price */
-.path{position:fixed;right:22px;top:50%;height:min(520px,64vh);transform:translateY(-50%);z-index:5;display:none;overflow:visible}
-.path polyline{fill:none;stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
-.path .ghost{stroke:var(--line)}
-.path .live{stroke:url(#pg);stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--page))}
-.path circle{fill:#fff;filter:drop-shadow(0 0 6px rgba(255,255,255,.9))}
-@media(min-width:1280px){.path{display:block}.bar{display:none}}
 
 /* hero */
 .hero{min-height:100vh;min-height:100svh;display:grid;align-items:center;padding:120px 0 96px}
@@ -244,7 +238,7 @@ footer p{max-width:70ch}
 [data-motion=reduced] .mk,[data-motion=reduced] .lnote{opacity:1}
 [data-motion=reduced] .mark .bar-s{stroke-dashoffset:0}[data-motion=reduced] .mark .pt,[data-motion=reduced] .hero .up{opacity:1;transform:none}
 [data-motion=reduced] .lens .rail{flex-wrap:wrap;transform:none!important}
-[data-motion=reduced] .count,[data-motion=reduced] .cue,[data-motion=reduced] .path,[data-motion=reduced] .bar{display:none}
+[data-motion=reduced] .count,[data-motion=reduced] .cue,[data-motion=reduced] .bar{display:none}
 </style>
 </head>
 <body>
@@ -267,13 +261,6 @@ footer p{max-width:70ch}
     <a class="btn go sm" href="https://discord.gg/vU9kkAEnsh" target="_blank" rel="noopener">Join the beta</a>
   </div>
 </header>
-
-<svg class="path" viewBox="0 0 28 520" preserveAspectRatio="none" width="28" aria-hidden="true">
-  <defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38DDF8"/><stop offset=".55" stop-color="#5C9DFF"/><stop offset="1" stop-color="#B29AFF"/></linearGradient></defs>
-  <polyline class="ghost" points="14,0 14,36 6,70 20,112 10,150 23,204 8,250 18,300 11,348 22,402 9,452 14,520"/>
-  <polyline class="live" id="pline" pathLength="1" points="14,0 14,36 6,70 20,112 10,150 23,204 8,250 18,300 11,348 22,402 9,452 14,520"/>
-  <circle id="pdot" r="3.5" cx="14" cy="0"/>
-</svg>
 
 <main id="main">
 
@@ -584,7 +571,6 @@ const pins = $$("[data-pin]").map(n => ({n, fn: {price, lens}[n.dataset.pin]}));
 const views = $$("[data-view]"), top = $("#top"), hero = $("#hero");
 const spy = $("#spy"), spyLinks = $$("a", spy), screens = spyLinks.map(a => $(a.getAttribute("href")));
 const navLinks = $$(".top nav a"), navSecs = navLinks.map(a => $(a.getAttribute("href")));
-const pline = $("#pline"), pdot = $("#pdot"), plen = pline.getTotalLength();
 
 let lastY = scrollY;
 function update() {
@@ -592,7 +578,6 @@ function update() {
   root.style.setProperty("--page", page.toFixed(4));
   root.style.setProperty("--hp", clamp(y / (vh * .75)).toFixed(3));
   top.classList.toggle("solid", y > 24);
-  const pt = pline.getPointAtLength(plen * page); pdot.setAttribute("cx", pt.x); pdot.setAttribute("cy", pt.y);
   for (const {n, fn} of pins) {
     const r = n.getBoundingClientRect(), p = reduced ? .82 : clamp(-r.top / Math.max(1, r.height - vh));
     n.style.setProperty("--p", p.toFixed(4)); fn && fn(p);
