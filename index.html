@@ -50,7 +50,7 @@ ul,ol{padding:0;list-style:none}
 strong,b{color:var(--t1);font-weight:600}
 :focus-visible{outline:2px solid var(--volt);outline-offset:3px;border-radius:6px}
 ::selection{background:var(--volt);color:var(--volt-ink)}
-.wrap{max-width:calc(1160px + 2*var(--pad));margin-inline:auto;padding-left:max(var(--pad),env(safe-area-inset-left,0px));padding-right:max(var(--pad),env(safe-area-inset-right,0px))}
+.wrap{width:100%;max-width:calc(1160px + 2*var(--pad));margin-inline:auto;padding-left:max(var(--pad),env(safe-area-inset-left,0px));padding-right:max(var(--pad),env(safe-area-inset-right,0px))}
 .lede{font-size:clamp(1.1rem,1.6vw,1.3rem);color:var(--ctx);margin-top:20px}
 .note{font-size:.9rem;color:var(--t3)}
 section{position:relative}
@@ -223,6 +223,7 @@ ol.list li::before{content:counter(n);background:none;top:11px;left:0;width:28px
 footer{border-top:1px solid var(--line-soft);padding:44px 0 calc(44px + env(safe-area-inset-bottom));font-size:.9rem;color:var(--t3)}
 footer .wrap{display:flex;flex-wrap:wrap;gap:16px 40px;justify-content:space-between;align-items:center}
 footer p{max-width:70ch}
+footer .social{display:flex;gap:20px;font-weight:600}footer .social a{color:var(--t2);text-decoration:none}footer .social a:hover{color:var(--t1)}
 
 @media(max-width:880px){
   .top nav{display:none}
@@ -501,7 +502,7 @@ footer p{max-width:70ch}
     <div class="plain" data-view>
       <div class="card rv" style="--i:0"><h4>Pricing</h4><p>Free during the beta. There is no public price yet.</p></div>
       <div class="card rv" style="--i:1"><h4>Company</h4><p>Founded and built by Aidan Sherlock. Version 0.10.0 is the first release to outside testers.</p></div>
-      <div class="card rv" style="--i:2"><h4>Get in touch</h4><p>Message Iridium on <a href="https://www.linkedin.com/company/iridium-findtheedge" target="_blank" rel="noopener">LinkedIn</a>, or join the Discord and ask for Aidan.</p></div>
+      <div class="card rv" style="--i:2"><h4>Get in touch</h4><p>Message Iridium on <a href="https://www.linkedin.com/company/iridium-findtheedge" target="_blank" rel="noopener">LinkedIn</a> or on <a href="https://x.com/iridiumbet" target="_blank" rel="noopener">X (@iridiumbet)</a>, or join the Discord and ask for Aidan.</p></div>
     </div>
   </div>
 </section>
@@ -512,6 +513,7 @@ footer p{max-width:70ch}
     <div class="cta">
       <a class="btn go" href="https://discord.gg/vU9kkAEnsh" target="_blank" rel="noopener">Join the beta on Discord</a>
       <a class="btn" href="https://www.linkedin.com/company/iridium-findtheedge" target="_blank" rel="noopener">Iridium on LinkedIn</a>
+      <a class="btn" href="https://x.com/iridiumbet" target="_blank" rel="noopener">Iridium on X</a>
     </div>
   </div></div>
 </section>
@@ -521,6 +523,7 @@ footer p{max-width:70ch}
 <footer>
   <div class="wrap">
     <p>Iridium never places bets and never guarantees results. It is information only. 18 or older. If gambling stops being fun, help is available at 1-800-GAMBLER.</p>
+    <p class="social"><a href="https://x.com/iridiumbet" target="_blank" rel="noopener">X</a><a href="https://www.linkedin.com/company/iridium-findtheedge" target="_blank" rel="noopener">LinkedIn</a><a href="https://discord.gg/vU9kkAEnsh" target="_blank" rel="noopener">Discord</a></p>
     <button class="btn sm" id="motion" type="button" aria-pressed="false">Motion: full</button>
   </div>
 </footer>
