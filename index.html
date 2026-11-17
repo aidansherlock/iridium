@@ -647,7 +647,7 @@ void main(){
   float gain=(1.0+uLift*0.25)*open;
   vec3 col=base+(cViolet*(violet*0.23+coreV*0.12)+cIce*(ice*0.16+coreI*0.10))*gain;
   col+=mix(cIce,cViolet,smoothstep(-0.12,0.12,d.x))*core*0.55;
-  col+=(hash(gl_FragCoord.xy+fract(t)*61.0)-0.5)/160.0;
+  col+=(hash(gl_FragCoord.xy)-0.5)/160.0;
   gl_FragColor=vec4(col,1.0);
 }`;
   const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
@@ -662,8 +662,10 @@ void main(){
   gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
   const U = {}; for (const n of ["uRes", "uT", "uIntro", "uOrigin", "uLift"]) U[n] = gl.getUniformLocation(prog, n);
   const weak = (navigator.hardwareConcurrency || 4) <= 4;
-  let scale = weak ? .14 : .2, raf = 0, running = false, wanted = false, clock = 40, last = 0, slow = 0, lift = 0, liftTo = 0, intro = 1, introFrom = 0, introMs = 0, origin = [.5, .5];
-  function resize() { const w = Math.max(48, Math.round(innerWidth * scale)), h = Math.max(48, Math.round(innerHeight * scale)); if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); } }
+  // Drawn close to the window's own resolution, within a pixel budget. It used to be drawn at a fifth to a seventh of the size and stretched, which showed as blocks along the edges of the light.
+  const budget = weak ? 6e5 : 1.2e6;
+  let q = 1, raf = 0, running = false, wanted = false, clock = 40, last = 0, slow = 0, lift = 0, liftTo = 0, intro = 1, introFrom = 0, introMs = 0, origin = [.5, .5];
+  function resize() { const s = Math.min(1, Math.sqrt(budget / (innerWidth * innerHeight))) * q, w = Math.max(48, Math.round(innerWidth * s)), h = Math.max(48, Math.round(innerHeight * s)); if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); } }
   function draw() { gl.uniform2f(U.uRes, canvas.width, canvas.height); gl.uniform1f(U.uT, clock); gl.uniform1f(U.uIntro, intro); gl.uniform2f(U.uOrigin, origin[0], origin[1]); gl.uniform1f(U.uLift, lift); gl.drawArrays(gl.TRIANGLES, 0, 3); }
   function frame(now) {
     raf = requestAnimationFrame(frame);
@@ -672,7 +674,7 @@ void main(){
     clock += (dt / 1000) * (1 + lift * 11);                                                      // up to twelve times its pace, as on a tab change in the app
     if (introMs < 0) { introMs = -introMs; introFrom = now; }
     if (introMs) { const u = Math.min(1, (now - introFrom) / introMs); intro = 1 - Math.pow(1 - u, 3); if (u >= 1) introMs = 0; }
-    if (dt > 45) { if (++slow > 40 && scale > .09) { scale *= .7; slow = 0; resize(); } } else if (slow > 0) slow--;
+    if (dt > 45) { if (++slow > 40 && q > .4) { q *= .8; slow = 0; resize(); } } else if (slow > 0) slow--;
     draw();
   }
   const start = () => { if (running) return; running = true; last = performance.now(); raf = requestAnimationFrame(frame); };
