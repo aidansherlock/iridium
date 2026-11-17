@@ -38,6 +38,8 @@ body{font:400 1.0625rem/1.6 Inter,system-ui,sans-serif;color:var(--t2);backgroun
   radial-gradient(55vw 55vh at 5% 30%,rgba(56,221,248,.09),transparent 70%),var(--bg);
   -webkit-font-smoothing:antialiased}
 main,footer{position:relative;z-index:1}
+/* copying is switched off at the owner's request: text cannot be selected, and copy and cut do nothing. Links and buttons still work. */
+body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .contract,.nums,.count,.chip{font-variant-numeric:tabular-nums}
 main{overflow-x:clip}
 h1,h2,h3{font-family:Overpass,Inter,sans-serif;font-weight:900;color:var(--t1);letter-spacing:-.022em;line-height:1.02;text-wrap:balance}
@@ -692,6 +694,7 @@ void main(){
 const light = createLight($("#light"));
 if (light && !reduced && scrollY < 40) { const m = $(".mark").getBoundingClientRect(); light.open([(m.left + m.width * .6) / innerWidth, (m.top + m.height * .4) / innerHeight], 2600); }
 
+for (const type of ["copy", "cut", "dragstart"]) document.addEventListener(type, e => e.preventDefault());
 addEventListener("scroll", update, {passive: true});
 addEventListener("resize", update);
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
