@@ -766,6 +766,16 @@ f.addEventListener("submit", async e => {
   if (!el("adult").checked) { say("Tick the box to confirm you are 18 or older.", "err"); el("adult").focus(); return; }
   btn.disabled = true;
   if (!ENDPOINT) {
+    // No form service yet: the sign-up is stored in PostHog (email, name and answer on the visitor's profile, one signup_submitted event),
+    // and if PostHog is blocked by the browser the visitor's email app opens with the sign-up filled in instead.
+    const p = window.posthog;
+    if (p && p.__loaded) {
+      try {
+        p.identify(d.email.toLowerCase(), { email: d.email, name: d.name, trade: d.trade, signup_at: new Date().toISOString() });
+        p.capture("signup_submitted", { method: "posthog", email: d.email, name: d.name, trade: d.trade }, { send_instantly: true });
+        f.reset(); say("You're on the list. Invites go out by email within two days.", "ok"); btn.disabled = false; return;
+      } catch (e) {}
+    }
     const body = "Email: " + d.email + "\nName: " + (d.name || "-") + "\nTrades or follows: " + d.trade + "\n18 or older: yes\n\nSent from the Iridium site.";
     location.href = "mailto:" + MAIL + "?subject=" + encodeURIComponent("Iridium beta sign-up") + "&body=" + encodeURIComponent(body);
     say("Your email app should open with the sign-up filled in. Press send and the invite follows. If nothing opened, email " + MAIL + ".", "ok");
