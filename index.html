@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Iridium">
 <meta property="og:title" content="Iridium beta: find the edge">
-<meta property="og:description" content="A research desk for sports prices: one exact contract, every venue, priced after fees, graded against the close. It never places a bet. Invite-only beta.">
+<meta property="og:description" content="A research desk for sports prices: one exact contract, every venue, priced after fees, graded against the close. It never places a bet. Try the demo in your browser, then join the free beta.">
 <meta property="og:url" content="https://aidansherlock.github.io/iridium/">
 <meta property="og:image" content="https://aidansherlock.github.io/iridium/og.png">
 <meta property="og:image:width" content="1200">
@@ -254,7 +254,33 @@ footer .social{display:flex;gap:20px;font-weight:600}footer .social a{color:var(
 [data-motion=reduced] .mark .bar-s{stroke-dashoffset:0}[data-motion=reduced] .mark .pt,[data-motion=reduced] .hero .up{opacity:1;transform:none}
 [data-motion=reduced] .lens .rail{flex-wrap:wrap;transform:none!important}
 [data-motion=reduced] .count,[data-motion=reduced] .cue,[data-motion=reduced] .bar{display:none}
+
+/* sign-up form */
+.form{display:grid;gap:14px;margin-top:4px}
+.form label{display:grid;gap:6px;font-size:.92rem;color:var(--t2)}
+.form input,.form select{font:inherit;color:var(--t1);background:rgba(10,13,19,.7);border:1px solid var(--line);border-radius:14px;min-height:48px;padding:0 14px;width:100%;-webkit-user-select:text;user-select:text}
+.form select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--t3) 50%),linear-gradient(135deg,var(--t3) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:40px}
+.form select option{background:#11161F;color:#F5F9FF}
+.form input:focus,.form select:focus{outline:2px solid var(--acc);outline-offset:1px;border-color:var(--acc)}
+.form input::placeholder{color:var(--t3)}
+.form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form .check{display:flex;gap:10px;align-items:flex-start;font-size:.95rem;color:var(--t2)}
+.form .check input{width:20px;height:20px;min-height:0;margin-top:3px;accent-color:var(--volt);flex:none;cursor:pointer}
+.form .hp{position:absolute;left:-9999px;width:0;height:0;opacity:0}
+.form .btn{width:100%;justify-content:center}
+.form .msg{font-size:.92rem;color:var(--t3);min-height:1.4em;margin:0}
+.form .msg.ok{color:var(--good)}.form .msg.err{color:var(--bad)}
+.form .msg a{color:var(--acc)}
+.cols .card>.chip{margin-bottom:12px}
+.cols .card .btn{margin-top:18px}
+.steps-note{font-size:.9rem;color:var(--t3);margin-top:12px}
+@media (max-width:560px){.form .row{grid-template-columns:1fr}}
 </style>
+<script>
+/* Product analytics (PostHog). The project token is public by design; the site has no server to hide it behind. Counts page views, demo opens, sign-ups and Discord clicks. */
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once unregister identify alias reset set_config opt_in_capturing opt_out_capturing has_opted_out_capturing get_distinct_id getFeatureFlag isFeatureEnabled onFeatureFlags reloadFeatureFlags captureException debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+posthog.init("phc_vAF9nnAyTkCeyutMaEFtL4ADqV4cLjaa2xCzmeAArGBw",{api_host:"https://us.i.posthog.com",defaults:"2025-05-24",capture_pageview:true,autocapture:false,capture_pageleave:true,disable_session_recording:true});
+</script>
 </head>
 <body>
 <canvas id="light" aria-hidden="true"></canvas>
@@ -270,10 +296,11 @@ footer .social{display:flex;gap:20px;font-weight:600}footer .social a{color:var(
     <nav aria-label="Sections">
       <a href="#how">How it prices</a>
       <a href="#app">The app</a>
+      <a href="demo/" data-ph="nav_demo">Live demo</a>
       <a href="#beta">Beta</a>
       <a href="#investors">Investors</a>
     </nav>
-    <a class="btn go sm" href="https://discord.gg/vU9kkAEnsh" target="_blank" rel="noopener">Join the beta</a>
+    <a class="btn go sm" href="#beta" data-ph="nav_invite">Get a beta invite</a>
   </div>
 </header>
 
@@ -290,14 +317,14 @@ footer .social{display:flex;gap:20px;font-weight:600}footer .social a{color:var(
     <p class="lede up" style="--i:1">Iridium is a research desk for sports prices. It checks every price it can see for one exact contract against a no-vig reference, works out fees and depth at the size you could actually buy, and keeps a record of what it recommended and what happened next.</p>
     <p class="never up" style="--i:2">It never places a bet.</p>
     <div class="cta up" style="--i:3">
-      <a class="btn go" href="https://discord.gg/vU9kkAEnsh" target="_blank" rel="noopener">Join the beta on Discord</a>
-      <a class="btn" href="#investors">Read the investor summary</a>
+      <a class="btn go" href="demo/" data-ph="hero_demo">Try the live demo</a>
+      <a class="btn" href="#beta" data-ph="hero_invite">Get a beta invite</a>
     </div>
     <div class="facts up" style="--i:4">
+      <span class="chip good">Demo runs in your browser, nothing to install</span>
       <span class="chip">Version 0.10.0</span>
-      <span class="chip">Invite-only beta</span>
-      <span class="chip good">Free during the beta</span>
-      <span class="chip">Runs on your own computer</span>
+      <span class="chip">Free private beta</span>
+      <span class="chip">Paper trading only</span>
     </div>
   </div>
   <div class="cue" aria-hidden="true"></div>
@@ -362,7 +389,7 @@ footer .social{display:flex;gap:20px;font-weight:600}footer .social a{color:var(
 <section class="sec app" id="app">
   <div class="wrap">
     <div data-view><h2 class="wipe">Seven screens, one desk</h2>
-    <p class="lede rv" style="--i:1">A league bar sits on every screen. Deep links work everywhere. On a phone, details open as sheets that follow your finger.</p></div>
+    <p class="lede rv" style="--i:1">A league bar sits on every screen. Deep links work everywhere, so a row, a tab and a filter can be shared as one address.</p></div>
     <div class="grid">
       <nav class="spy" id="spy" aria-label="Screens">
         <a href="#s-home">Home</a><a href="#s-opps">Opportunities</a><a href="#s-markets">Markets</a><a href="#s-research">Research</a><a href="#s-perf">Performance</a><a href="#s-journal">Journal</a><a href="#s-settings">Settings</a>
@@ -371,7 +398,7 @@ footer .social{display:flex;gap:20px;font-weight:600}footer .social a{color:var(
         <article class="screen" id="s-home" data-view><h3 class="wipe">Home</h3><p class="rv" style="--i:1">Your desk at a glance: this month's profit and loss and drawdown, today's best playable contracts, the games starting soonest, and your recent bets.</p></article>
         <article class="screen" id="s-opps" data-view><h3 class="wipe">Opportunities</h3><p class="rv" style="--i:1">The decision workspace. One exact contract per row with the venue price, the reference chance, net EV after fees, available size, a suggested stake, and a status that is checked again every time the board is read.</p></article>
         <article class="screen" id="s-markets" data-view><h3 class="wipe">Markets</h3><p class="rv" style="--i:1">Every Pinnacle move, scored 0 to 100. The movement score describes how big, fast and clean a move was. It is not a probability, and the screen says so.</p></article>
-        <article class="screen" id="s-research" data-view><h3 class="wipe">Research</h3><p class="rv" style="--i:1">All of today's games, signal or not. Every book on every side, records over the last 5, 10, 20 and 50 games, players, props, lineups and history.</p></article>
+        <article class="screen" id="s-research" data-view><h3 class="wipe">Research</h3><p class="rv" style="--i:1">All of today's games, signal or not. Every book on every side, records over the last 5, 10, 20 and 50 games, players, lineups and history.</p></article>
         <article class="screen" id="s-perf" data-view><h3 class="wipe">Performance</h3><p class="rv" style="--i:1">Six scopes that are never blended: signal grading, paper orders, your bets, model calibration, execution and portfolio.</p></article>
         <article class="screen" id="s-journal" data-view><h3 class="wipe">Journal</h3><p class="rv" style="--i:1">What you actually bet. Profit and loss, ROI, win rate with a range, drawdown and streak. Every edit and settlement is audited, and it exports to CSV.</p></article>
         <article class="screen" id="s-settings" data-view><h3 class="wipe">Settings</h3><p class="rv" style="--i:1">Bankroll, unit, your books, the Kelly fraction and exposure limits. Your data key and what a scan costs. Backup, diagnostics and a health check.</p></article>
@@ -397,18 +424,37 @@ footer .social{display:flex;gap:20px;font-weight:600}footer .social a{color:var(
 <section class="sec" id="beta">
   <div class="wrap">
     <div data-view><h2 class="wipe">Join as a founding tester</h2>
-    <p class="lede rv" style="--i:1">The beta is small and invite-only. Iridium runs on your own computer, not a hosted account. It is free: no subscription and no card.</p></div>
+    <p class="lede rv" style="--i:1">Three steps. The first one needs nothing installed. The beta is free, paper trading only, and small on purpose.</p></div>
     <div class="cols" data-view>
-      <div class="card rv" style="--i:0"><h3>Set up in about 10 minutes</h3>
+      <div class="card rv" style="--i:0"><span class="chip good">Step 1</span><h3>Try it in your browser</h3>
+        <p>The real dashboard, running on one recorded scan. Open a row, read the evidence, check the risk tab, press Scan. Nothing is installed and nothing is saved. The prices are synthetic and every screen says Demo.</p>
+        <a class="btn go" href="demo/" data-ph="beta_demo">Open the live demo</a>
+      </div>
+      <div class="card rv" style="--i:1"><span class="chip good">Step 2</span><h3>Get your invite</h3>
+        <form id="signup" class="form" novalidate>
+          <div class="row">
+            <label>First name<input name="name" type="text" autocomplete="given-name" placeholder="Optional"></label>
+            <label>Email<input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+          </div>
+          <label>What do you trade or follow?
+            <select name="trade"><option value="">Choose one</option><option>Kalshi or Polymarket</option><option>Sportsbooks</option><option>Both</option><option>Just curious</option></select>
+          </label>
+          <label class="check"><input name="adult" type="checkbox" required><span>I am 18 or older. I understand the beta is paper trading only and that Iridium never places bets.</span></label>
+          <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn go" type="submit">Get my invite</button>
+          <p class="msg" aria-live="polite">Free, no card. Invites go out by email within two days.</p>
+        </form>
+      </div>
+      <div class="card rv" style="--i:2"><span class="chip">Step 3</span><h3>Install when the invite arrives, about 20 minutes</h3>
         <ol class="list">
-          <li>Install Python 3.10 or newer. Nothing else is downloaded. Works on Windows 10+, macOS 12+ and Linux.</li>
-          <li>Unzip the Iridium folder from your invite and check that its SHA-256 matches.</li>
-          <li>On Windows, double-click install.py once, then open Iridium. On Mac or Linux it is one command from the README.</li>
+          <li>Install Python 3.10 or newer on Windows 10 or newer. Nothing else is downloaded. The beta is tested on Windows only.</li>
+          <li>Unzip the Iridium folder from your invite email and check that its SHA-256 matches.</li>
+          <li>Double-click install.py once, then open Iridium. Mac and Linux are not part of the beta yet.</li>
           <li>Enter your bankroll, unit size and sportsbooks, then press Scan. With no key it runs in demo mode on made-up data, labelled Demo on every screen.</li>
           <li>To go live, add your own free key from The Odds API. The free plan's 500 credits cover about 15 scans a month.</li>
         </ol>
       </div>
-      <div class="card rv" style="--i:1"><h3>What we ask of you</h3>
+      <div class="card rv" style="--i:3"><h3>What we ask of you</h3>
         <ul class="list">
           <li>Scan at least 3 days a week.</li>
           <li>Do one 15-minute call with Aidan, the founder, in your first week.</li>
@@ -422,7 +468,7 @@ footer .social{display:flex;gap:20px;font-weight:600}footer .social a{color:var(
           <li>Don't share picks as advice.</li>
         </ul>
       </div>
-      <div class="card rv" style="--i:2"><h3>What you get</h3>
+      <div class="card rv" style="--i:4"><h3>What you get</h3>
         <ul class="list">
           <li><strong>Free Iridium for life</strong> once it becomes a paid product.</li>
           <li><strong>A one-time cash thank-you</strong> after Iridium earns revenue, for testers who complete the three asks. The amount will be announced then. It is a thank-you, not a share of the company.</li>
@@ -430,17 +476,17 @@ footer .social{display:flex;gap:20px;font-weight:600}footer .social a{color:var(
           <li><strong>First access</strong> to every new feature.</li>
         </ul>
       </div>
-      <div class="card rv" style="--i:3"><h3>Know before you join</h3>
+      <div class="card rv" style="--i:5"><h3>Know before you join</h3>
         <ul class="list">
           <li>Demo data is synthetic. It shows the method and has no predictive value.</li>
           <li>No live calibration, closing-line or return figures exist yet. Your scans start that record.</li>
-          <li>Player props are fetched per game and cost credits.</li>
+          <li>The beta is a Windows desktop app. A hosted version, phones and player props come in later stages.</li>
           <li>Your data, journal and key stay on your machine.</li>
         </ul>
       </div>
-      <div class="card span2 join rv" style="--i:4">
-        <p>New members see the rules first. Message Aidan there to confirm you are 18 or older, and you get the Founding Tester role and the private channels.</p>
-        <a class="btn go" href="https://discord.gg/vU9kkAEnsh" target="_blank" rel="noopener">Join the beta on Discord</a>
+      <div class="card span2 join rv" style="--i:6">
+        <p>Already invited? The tester Discord is where scans and bug reports go. New members see the rules first. Message Aidan there to confirm you are 18 or older, and you get the Founding Tester role and the private channels.</p>
+        <a class="btn" href="https://discord.gg/vU9kkAEnsh" target="_blank" rel="noopener" data-ph="discord_click">Open the tester Discord</a>
       </div>
     </div>
   </div>
@@ -513,7 +559,8 @@ footer .social{display:flex;gap:20px;font-weight:600}footer .social a{color:var(
   <div class="stick"><div class="wrap">
     <p class="words">Iridium does not promise profits. It promises measurement. Every decision is stored, every recommendation is graded, and the numbers that do not work get quieter on their own.</p>
     <div class="cta">
-      <a class="btn go" href="https://discord.gg/vU9kkAEnsh" target="_blank" rel="noopener">Join the beta on Discord</a>
+      <a class="btn go" href="demo/" data-ph="close_demo">Try the live demo</a>
+      <a class="btn" href="#beta" data-ph="close_invite">Get a beta invite</a>
       <a class="btn" href="https://www.linkedin.com/company/iridium-findtheedge" target="_blank" rel="noopener">Iridium on LinkedIn</a>
       <a class="btn" href="https://x.com/iridiumbet" target="_blank" rel="noopener">Iridium on X</a>
     </div>
@@ -525,7 +572,7 @@ footer .social{display:flex;gap:20px;font-weight:600}footer .social a{color:var(
 <footer>
   <div class="wrap">
     <p>Iridium never places bets and never guarantees results. It is information only. 18 or older. If gambling stops being fun, help is available at 1-800-GAMBLER.</p>
-    <p class="social"><a href="https://x.com/iridiumbet" target="_blank" rel="noopener">X</a><a href="https://www.linkedin.com/company/iridium-findtheedge" target="_blank" rel="noopener">LinkedIn</a><a href="https://discord.gg/vU9kkAEnsh" target="_blank" rel="noopener">Discord</a></p>
+    <p class="social"><a href="demo/" data-ph="footer_demo">Live demo</a><a href="https://x.com/iridiumbet" target="_blank" rel="noopener">X</a><a href="https://www.linkedin.com/company/iridium-findtheedge" target="_blank" rel="noopener">LinkedIn</a><a href="https://discord.gg/vU9kkAEnsh" target="_blank" rel="noopener">Discord</a></p>
     <button class="btn sm" id="motion" type="button" aria-pressed="false">Motion: full</button>
   </div>
 </footer>
@@ -587,7 +634,7 @@ function lens(p) { rail.style.transform = narrow.matches || reduced ? "" : `tran
 const pins = $$("[data-pin]").map(n => ({n, fn: {price, lens}[n.dataset.pin]}));
 const views = $$("[data-view]"), top = $("#top"), hero = $("#hero");
 const spy = $("#spy"), spyLinks = $$("a", spy), screens = spyLinks.map(a => $(a.getAttribute("href")));
-const navLinks = $$(".top nav a"), navSecs = navLinks.map(a => $(a.getAttribute("href")));
+const navLinks = $$(".top nav a[href^='#']"), navSecs = navLinks.map(a => $(a.getAttribute("href")));
 
 let lastY = scrollY;
 function update() {
@@ -699,6 +746,45 @@ addEventListener("scroll", update, {passive: true});
 addEventListener("resize", update);
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
 applyMotion();
+})();
+</script>
+<script>
+(() => {
+// Sign-up. ENDPOINT is a Formspree form address such as "https://formspree.io/f/abcdwxyz" (free plan: 50 a month, counted in its dashboard,
+// one email per sign-up). Until it is set, the form opens the visitor's email app with the sign-up filled in, so nothing is lost either way.
+const ENDPOINT = "";
+const MAIL = "aidansherlocks@gmail.com";
+const f = document.getElementById("signup"); if (!f) return;
+const el = n => f.elements[n], msg = f.querySelector(".msg"), btn = f.querySelector("button");
+const say = (t, cls) => { msg.textContent = t; msg.className = "msg" + (cls ? " " + cls : ""); };
+const ph = (ev, props) => { try { window.posthog && posthog.capture(ev, props || {}); } catch (e) {} };
+f.addEventListener("submit", async e => {
+  e.preventDefault();
+  if (el("_gotcha").value) return;
+  const d = { email: el("email").value.trim(), name: el("name").value.trim(), trade: el("trade").value || "not said", adult: el("adult").checked ? "yes" : "no", page: location.href, _subject: "Iridium beta sign-up" };
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) { say("Add a working email address.", "err"); el("email").focus(); return; }
+  if (!el("adult").checked) { say("Tick the box to confirm you are 18 or older.", "err"); el("adult").focus(); return; }
+  btn.disabled = true;
+  if (!ENDPOINT) {
+    const body = "Email: " + d.email + "\nName: " + (d.name || "-") + "\nTrades or follows: " + d.trade + "\n18 or older: yes\n\nSent from the Iridium site.";
+    location.href = "mailto:" + MAIL + "?subject=" + encodeURIComponent("Iridium beta sign-up") + "&body=" + encodeURIComponent(body);
+    say("Your email app should open with the sign-up filled in. Press send and the invite follows. If nothing opened, email " + MAIL + ".", "ok");
+    ph("signup_submitted", { method: "email", trade: d.trade }); btn.disabled = false; return;
+  }
+  say("Sending…");
+  try {
+    const r = await fetch(ENDPOINT, { method: "POST", headers: { "Accept": "application/json", "Content-Type": "application/json" }, body: JSON.stringify(d) });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    f.reset(); say("You're on the list. Invites go out by email within two days.", "ok");
+    ph("signup_submitted", { method: "form", trade: d.trade });
+  } catch (err) {
+    msg.innerHTML = 'Could not send just now. Email <a href="mailto:' + MAIL + '?subject=Iridium%20beta%20sign-up">' + MAIL + "</a> instead and you are in.";
+    msg.className = "msg err"; ph("signup_failed", { error: String(err) });
+  }
+  btn.disabled = false;
+});
+// Which buttons get used: every element with data-ph sends one event named after it.
+document.addEventListener("click", e => { const a = e.target.closest("[data-ph]"); if (a) ph(a.dataset.ph, { href: a.getAttribute("href") }); });
 })();
 </script>
 </body>
