@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iridium pre-registration</title>
+<meta name="description" content="The pre-registered closing-line-value test for the Iridium beta, with its SHA-256 hashes and the dated addendum.">
+<meta name="robots" content="index, follow">
+<style>
+:root{--bg:#0b0d12;--fg:#e8e9ee;--muted:#9aa0ad;--accent:#7cc4ff;--card:#141821;--line:#232838}
+@media (prefers-color-scheme: light){:root{--bg:#f7f7f9;--fg:#15171c;--muted:#5a6070;--accent:#0b63c4;--card:#ffffff;--line:#dcdfe6}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:48px 16px}
+main{max-width:760px;margin:0 auto}
+h1{font-size:28px;margin:0 0 8px}
+p{margin:0 0 14px}
+.muted{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:18px 0}
+.card h2{font-size:18px;margin:0 0 8px}
+code{font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-all;color:var(--fg)}
+a{color:var(--accent)}
+ul{padding-left:20px;margin:0 0 14px}
+</style>
+</head>
+<body>
+<main>
+<h1>Iridium pre-registration</h1>
+<p class="muted">The rules of the beta's closing-line-value test, fixed before any number was computed. Each file's SHA-256 is published beside it, and every report quotes these hashes. This page lives in a public Git repository, so the commit history is an independent timestamp.</p>
+
+<div class="card">
+<h2>Pre-registration, 21 November 2026</h2>
+<p><a href="CLV_PREREGISTRATION_2026-11-21.md">CLV_PREREGISTRATION_2026-11-21.md</a></p>
+<p>SHA-256 <code>18f22e5941ebc64f4bd9506518927d9af390338394726a94ad35653ab0bca386</code></p>
+<p class="muted">Hypothesis, metric, the Pinnacle close and its 60-minute window, the dedupe key, n &ge; 300, the 19 January 2027 freeze, the bootstrap, the result labels and the kill check. Nothing in it changes after publication.</p>
+</div>
+
+<div class="card">
+<h2>Addendum 1, 26 November 2026, 21:43:04 UTC</h2>
+<p><a href="CLV_PREREGISTRATION_ADDENDUM_1_2026-11-26.md">CLV_PREREGISTRATION_ADDENDUM_1_2026-11-26.md</a></p>
+<p>SHA-256 <code>cae49217a9db41bf480a38584548d019e0bde5b4f8fa69c21f989bab1899fe09</code></p>
+<p class="muted">Admits one narrow part of the author's own install into the main series: paper orders opened by unattended scheduled scans on Monday, Wednesday, Friday and Sunday, 16:00 to 16:59 UTC. Every result is reported under both the original rule and this one.</p>
+</div>
+
+<div class="card">
+<h2>Reports</h2>
+<ul>
+<li>Sunday 21 December 2026: interim, descriptive only.</li>
+<li>Tuesday 20 January 2027: the one inferential look, with the label, mean, interval, n and coverage, the pseudonymous data and the script that computes every number.</li>
+</ul>
+<p class="muted">There is no performance record yet, and none is claimed before it exists. <a href="SHA256SUMS">SHA256SUMS</a> holds both hashes in <code>sha256sum -c</code> form. <a href="../">Back to Iridium</a>.</p>
+</div>
+</main>
+</body>
+</html>
